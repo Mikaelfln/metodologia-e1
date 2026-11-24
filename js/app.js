@@ -198,7 +198,7 @@ async function openTask(payload) {
   const clockValue = el("strong", { text: "" });
   const clock = el("p", { class: "clock" }, "Tempo restante ", clockValue);
   const editor = el("textarea", {
-    class: "ruled",
+    class: "writing",
     spellcheck: "false",
     autocomplete: "off",
     "aria-label": "Seu resumo",
@@ -307,7 +307,7 @@ async function openTask(payload) {
 function renderRecall(payload) {
   const notice = el("p", { class: "notice", role: "alert" });
   const answer = el("textarea", {
-    class: "ruled",
+    class: "writing",
     spellcheck: "false",
     autocomplete: "off",
     "aria-label": "Frase do seu resumo",

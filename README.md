@@ -36,4 +36,4 @@ Os testes do banco rodam o `supabase/schema.sql` em um Postgres embutido (PGlite
 
 ## Licença
 
-MIT.
+MIT. Os ícones em `icons/` são do [Lucide](https://lucide.dev), sob licença ISC.

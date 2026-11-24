@@ -1,16 +1,35 @@
 :root {
+  color-scheme: light;
   --paper: #ffffff;
+  --field: #ffffff;
   --ink: #1f1f1f;
   --pencil: #5f6368;
   --pen: #1d3fae;
-  --pen-dark: #142c7c;
-  --rule: #cfdaf0;
-  --margin-line: #d8473f;
+  --button: #1d3fae;
+  --button-hover: #142c7c;
+  --button-text: #ffffff;
+  --idle: #e6e8ec;
+  --alert: #d8473f;
   --marker: #ffef8a;
   --edge: #b7bfcc;
   --reading: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
   --controls: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --line: 2rem;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #17191d;
+  --field: #1f2227;
+  --ink: #e7e4dd;
+  --pencil: #a0a5ad;
+  --pen: #9db2ff;
+  --button: #3f5fd0;
+  --button-hover: #5474e2;
+  --button-text: #ffffff;
+  --idle: #2b2f36;
+  --alert: #ef7b73;
+  --marker: #5a4f00;
+  --edge: #444a54;
 }
 
 *,
@@ -52,6 +71,36 @@ body {
 .masthead-note {
   padding: 0 0.4rem;
   background: var(--marker);
+}
+
+.theme-switch {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  width: 2rem;
+  height: 2rem;
+  margin: -0.4rem 0 -0.4rem auto;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink);
+}
+
+.theme-switch:hover {
+  background: var(--idle);
+}
+
+.theme-switch::before {
+  content: "";
+  width: 1.15rem;
+  height: 1.15rem;
+  background: currentColor;
+  mask: url("../icons/moon.svg") center / contain no-repeat;
+}
+
+:root[data-theme="dark"] .theme-switch::before {
+  mask-image: url("../icons/sun.svg");
 }
 
 main {
@@ -118,21 +167,21 @@ button {
 
 .primary {
   padding: 0.6rem 1.3rem;
-  border: 1px solid var(--pen-dark);
+  border: 1px solid var(--button-hover);
   border-radius: 3px;
-  background: var(--pen);
-  color: #fff;
+  background: var(--button);
+  color: var(--button-text);
   font-size: 0.95rem;
   font-weight: 600;
 }
 
 .primary:hover {
-  background: var(--pen-dark);
+  background: var(--button-hover);
 }
 
 .primary:disabled {
   border-color: var(--edge);
-  background: #e6e8ec;
+  background: var(--idle);
   color: var(--pencil);
   cursor: not-allowed;
 }
@@ -163,7 +212,7 @@ main:focus-visible {
 .notice {
   margin-top: 1.25rem;
   padding-left: 0.75rem;
-  border-left: 3px solid var(--margin-line);
+  border-left: 3px solid var(--alert);
   font-family: var(--controls);
   font-size: 0.9rem;
 }
@@ -172,42 +221,26 @@ main:focus-visible {
   display: none;
 }
 
-.ruled {
+.writing {
   display: block;
   width: 100%;
-  padding: 0 1rem 0 3.4rem;
+  padding: 0.8rem 1rem;
   border: 1px solid var(--edge);
   border-radius: 0;
-  background-color: #fff;
-  background-image:
-    linear-gradient(
-      to right,
-      transparent 2.7rem,
-      var(--margin-line) 2.7rem,
-      var(--margin-line) calc(2.7rem + 1px),
-      transparent calc(2.7rem + 1px)
-    ),
-    linear-gradient(
-      to bottom,
-      transparent calc(var(--line) - 1px),
-      var(--rule) calc(var(--line) - 1px)
-    );
-  background-size:
-    100% 100%,
-    100% var(--line);
-  background-attachment: scroll, local;
-  color: #14213d;
+  background: var(--field);
+  color: var(--ink);
   font-family: var(--reading);
   font-size: 1rem;
-  line-height: var(--line);
+  line-height: 1.7;
   resize: none;
 }
 
-.ruled:focus-visible {
+.writing:focus-visible {
   outline-offset: 0;
 }
 
-.ruled[readonly] {
+.writing[readonly],
+.writing:disabled {
   color: var(--pencil);
 }
 
@@ -247,13 +280,9 @@ main:focus-visible {
 .task {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 4rem);
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
   align-items: start;
   padding-top: 1.75rem;
-}
-
-.source {
-  max-width: 38rem;
 }
 
 .source p {
@@ -266,7 +295,7 @@ main:focus-visible {
   top: 4.5rem;
 }
 
-.desk .ruled {
+.desk .writing {
   height: calc(100vh - 13rem);
   min-height: 16rem;
 }
@@ -290,8 +319,8 @@ main:focus-visible {
   background: var(--marker);
 }
 
-.recall .ruled {
-  height: calc(var(--line) * 4 + 2px);
+.recall .writing {
+  height: 7.5rem;
 }
 
 fieldset {
@@ -377,6 +406,8 @@ legend {
   padding: 0.4rem 0.5rem;
   border: 1px solid var(--edge);
   border-radius: 0;
+  background: var(--field);
+  color: var(--ink);
   font: inherit;
   font-family: var(--controls);
 }
@@ -394,7 +425,7 @@ legend {
 .confirm {
   margin-top: 1.5rem;
   padding-left: 0.75rem;
-  border-left: 3px solid var(--margin-line);
+  border-left: 3px solid var(--alert);
 }
 
 .plain-message {
@@ -410,7 +441,7 @@ legend {
     position: static;
   }
 
-  .desk .ruled {
+  .desk .writing {
     height: 22rem;
   }
 
