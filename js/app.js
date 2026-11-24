@@ -1,4 +1,5 @@
 import { createApi } from "./api.js";
+import { DEFAULT_SESSION } from "./config.js";
 import { createTracker } from "./tracker.js";
 import { remainingSeconds } from "./flow.js";
 import { countWords, withinRange, recallSimilarity, MIN_WORDS, MAX_WORDS } from "./text.js";
@@ -17,7 +18,7 @@ const MESSAGES = {
 };
 
 const params = new URLSearchParams(window.location.search);
-const sessionCode = (params.get("s") ?? "").trim();
+const sessionCode = (params.get("s") ?? DEFAULT_SESSION).trim();
 const demo = params.get("demo") === "1";
 const screen = document.querySelector("#screen");
 const store = window.sessionStorage;

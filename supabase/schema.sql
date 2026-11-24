@@ -75,6 +75,10 @@ create table allocation_queue (
   participant_id uuid
 );
 
+insert into sessions (code, label, pilot) values
+  ('coleta', 'Coleta', false),
+  ('piloto', 'Piloto', true);
+
 alter table sessions enable row level security;
 alter table participants enable row level security;
 alter table events enable row level security;

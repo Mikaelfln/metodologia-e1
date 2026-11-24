@@ -33,6 +33,21 @@ test("get_consent rejects closed and unknown sessions and stores nothing", async
   await local.close();
 });
 
+test("the schema ships with a collection link and a pilot link", async () => {
+  const local = await fresh();
+  await local.rpc("get_consent($1)", ["coleta"]);
+  await local.rpc("start_session($1)", ["coleta"]);
+  await local.rpc("start_session($1)", ["piloto"]);
+  const rows = await local.admin(
+    "select session_code, pilot, classmate from participants order by session_code",
+  );
+  assert.deepEqual(rows, [
+    { session_code: "coleta", pilot: false, classmate: false },
+    { session_code: "piloto", pilot: true, classmate: false },
+  ]);
+  await local.close();
+});
+
 test("start_session rejects closed sessions", async () => {
   await assert.rejects(db.rpc("start_session($1)", ["OLD"]), /invalid_session/);
 });
