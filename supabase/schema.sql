@@ -3,7 +3,6 @@ create schema if not exists internal;
 create table sessions (
   code text primary key,
   label text not null default '',
-  classmate boolean not null default false,
   pilot boolean not null default false,
   active boolean not null default true,
   created_at timestamptz not null default now()
@@ -15,7 +14,6 @@ create table participants (
   withdrawal_code text not null unique,
   session_code text not null references sessions (code),
   condition text not null check (condition in ('no_ai', 'ai_review', 'ai_generate')),
-  classmate boolean not null,
   pilot boolean not null,
   stage text not null default 'instructions' check (
     stage in ('instructions', 'task', 'recall', 'authorship', 'quiz', 'profile', 'debrief')
@@ -93,7 +91,6 @@ select
   p.withdrawal_code,
   p.session_code,
   p.condition,
-  p.classmate,
   p.pilot,
   p.stage,
   p.completed_at is not null as complete,
@@ -278,13 +275,12 @@ declare
   v_participant participants;
   v_id uuid := gen_random_uuid();
 begin
-  insert into participants (id, withdrawal_code, session_code, condition, classmate, pilot)
+  insert into participants (id, withdrawal_code, session_code, condition, pilot)
   values (
     v_id,
     upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 8)),
     v_session.code,
     internal.next_condition(case when v_session.pilot then 'pilot' else 'main' end, v_id),
-    v_session.classmate,
     v_session.pilot
   )
   returning * into v_participant;

@@ -11,7 +11,7 @@ export async function createDb() {
   await db.exec(`
     insert into sessions (code, label) values ('LAB1', 'Lab session');
     insert into sessions (code, label, pilot) values ('PILOT', 'Pilot', true);
-    insert into sessions (code, label, classmate) values ('CLASS', 'Classroom', true);
+    insert into sessions (code, label) values ('LAB2', 'Second lab session');
     insert into sessions (code, label, active) values ('OLD', 'Closed', false);
   `);
 

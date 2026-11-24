@@ -39,11 +39,11 @@ test("the schema ships with a collection link and a pilot link", async () => {
   await local.rpc("start_session($1)", ["coleta"]);
   await local.rpc("start_session($1)", ["piloto"]);
   const rows = await local.admin(
-    "select session_code, pilot, classmate from participants order by session_code",
+    "select session_code, pilot from participants order by session_code",
   );
   assert.deepEqual(rows, [
-    { session_code: "coleta", pilot: false, classmate: false },
-    { session_code: "piloto", pilot: true, classmate: false },
+    { session_code: "coleta", pilot: false },
+    { session_code: "piloto", pilot: true },
   ]);
   await local.close();
 });
@@ -82,7 +82,7 @@ test("conditions are balanced in consecutive blocks of three", async () => {
   const local = await fresh();
   const assigned = [];
   for (let i = 0; i < 9; i += 1) {
-    const session = i % 2 === 0 ? "LAB1" : "CLASS";
+    const session = i % 2 === 0 ? "LAB1" : "LAB2";
     assigned.push((await local.rpc("start_session($1)", [session])).condition);
   }
   for (let i = 0; i < 9; i += 3) {
@@ -107,17 +107,21 @@ test("pilot sessions do not consume slots of the main allocation", async () => {
   await local.close();
 });
 
-test("participants inherit classmate and pilot flags from the session", async () => {
+test("participants inherit the pilot flag from the session", async () => {
   const local = await fresh();
-  await local.rpc("start_session($1)", ["CLASS"]);
+  await local.rpc("start_session($1)", ["LAB2"]);
   await local.rpc("start_session($1)", ["PILOT"]);
   const rows = await local.admin(
-    "select session_code, classmate, pilot from participants order by session_code",
+    "select session_code, pilot from participants order by session_code",
   );
   assert.deepEqual(rows, [
-    { session_code: "CLASS", classmate: true, pilot: false },
-    { session_code: "PILOT", classmate: false, pilot: true },
+    { session_code: "LAB2", pilot: false },
+    { session_code: "PILOT", pilot: true },
   ]);
+  const columns = await local.admin(
+    "select table_name from information_schema.columns where column_name = 'classmate'",
+  );
+  assert.deepEqual(columns, []);
   await local.close();
 });
 
