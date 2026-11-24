@@ -1,43 +1,41 @@
-const start = "O tempo começa a contar quando você clicar em Começar. O texto aparece nesse momento.";
-
 export const content = {
   consent: {
     title: "Termo de consentimento",
     paragraphs: [
-      "Esta é uma demonstração do site. Nada do que você fizer aqui é enviado ou guardado.",
-      "Na sessão real você vai ler um texto de uma página, escrever um resumo dele e, em seguida, responder a algumas perguntas. A sessão dura de 20 a 30 minutos.",
-      "A participação é voluntária e anônima. Você pode desistir a qualquer momento, basta fechar a página.",
+      "Esta é uma versão de demonstração do site, então nada do que você fizer aqui é enviado ou salvo.",
+      "Na sessão de verdade a pessoa lê um texto de uma página, escreve um resumo dele e depois responde a algumas perguntas, o que leva entre 20 e 30 minutos.",
+      "A participação é voluntária e anônima, e quem quiser desistir só precisa fechar a página."
     ],
     accept_label: "Li e aceito participar",
-    decline_label: "Não quero participar",
+    decline_label: "Não quero participar"
   },
   instructions_no_ai: {
     title: "Como vai funcionar",
     paragraphs: [
-      "Você vai ler um texto e escrever um resumo dele com suas próprias palavras.",
-      "Trabalhe sem nenhuma ferramenta de inteligência artificial e sem consultar outros materiais. Mantenha esta página aberta e não troque de aba durante a tarefa.",
-      start,
-    ],
+      "Nesta sessão você vai ler um texto e escrever um resumo dele com as suas próprias palavras.",
+      "Pedimos que você faça isso sem usar nenhuma ferramenta de inteligência artificial e sem consultar outros materiais, então deixe esta página aberta e não troque de aba enquanto estiver escrevendo.",
+      "O texto só aparece depois que você clicar em Começar, e é a partir daí que o tempo passa a contar."
+    ]
   },
   instructions_ai_review: {
     title: "Como vai funcionar",
     paragraphs: [
-      "Você vai ler um texto e escrever um resumo dele com suas próprias palavras.",
-      "Escreva o resumo você mesmo(a). Depois, você pode pedir à ferramenta de IA indicada pelo aplicador que revise o seu texto. Não peça à IA que escreva o resumo por você.",
-      start,
-    ],
+      "Nesta sessão você vai ler um texto e escrever um resumo dele com as suas próprias palavras.",
+      "O resumo deve ser escrito por você. Depois que terminar de escrever, pode pedir para a ferramenta de IA indicada pelo aplicador revisar o seu texto (clareza, gramática, tamanho) e aproveitar as sugestões que achar boas, mas sem pedir para ela escrever o resumo no seu lugar.",
+      "O texto só aparece depois que você clicar em Começar, e é a partir daí que o tempo passa a contar."
+    ]
   },
   instructions_ai_generate: {
     title: "Como vai funcionar",
     paragraphs: [
-      "Você vai ler um texto e entregar um resumo dele.",
-      "Use a ferramenta de IA indicada pelo aplicador para gerar o resumo: copie o texto, peça o resumo e cole o resultado aqui. Você pode editar o texto gerado antes de entregar.",
-      start,
-    ],
+      "Nesta sessão você vai ler um texto e entregar um resumo dele.",
+      "Para isso, use a ferramenta de IA indicada pelo aplicador: copie o texto, peça um resumo e cole aqui o que ela gerar. Se quiser, pode editar o resultado antes de entregar.",
+      "O texto só aparece depois que você clicar em Começar, e é a partir daí que o tempo passa a contar."
+    ]
   },
   task: {
     title: "Tarefa",
-    prompt: "Leia o texto e escreva um resumo de 150 a 200 palavras. Você tem 15 minutos.",
+    prompt: "Faça um resumo do texto com 150 a 200 palavras, em até 15 minutos."
   },
   source_text: {
     title: "O farol de Ponta Seca",
@@ -49,34 +47,37 @@ export const content = {
     ],
   },
   recall: {
-    prompt:
-      "Sem consultar nada, escreva de memória uma frase do resumo que você acabou de entregar, o mais fiel possível ao que você entregou.",
-    skip_label: "Não consigo lembrar de nenhuma frase",
+    prompt: "Agora, sem consultar nada, tente escrever de memória uma frase do resumo que você acabou de entregar, do jeito mais parecido possível com o que estava lá.",
+    skip_label: "Não consigo lembrar de nenhuma frase"
   },
   authorship: {
     prompt: "Quanto você sente que o resumo entregue é de sua autoria?",
     low: "nada meu",
-    high: "totalmente meu",
+    high: "totalmente meu"
   },
   quiz_intro: {
-    prompt: "Responda às perguntas abaixo sobre o texto que você leu, sem consultá-lo.",
+    prompt: "As perguntas abaixo são sobre o texto que você leu. Responda sem voltar a consultá-lo."
   },
   profile: {
-    intro: "Para terminar, três perguntas rápidas sobre você.",
+    intro: "Para terminar, só mais três perguntas sobre você.",
     course_label: "Qual é o seu curso?",
-    course_options: ["Ciência da Computação", "Outro curso da UFCG", "Outro"],
+    course_options: [
+      "Ciência da Computação",
+      "Outro curso da UFCG",
+      "Outro"
+    ],
     term_label: "Em que período você está?",
     ai_frequency_label: "Com que frequência você usa ferramentas de IA para escrever textos?",
     ai_frequency_low: "nunca",
-    ai_frequency_high: "sempre",
+    ai_frequency_high: "sempre"
   },
   debrief: {
     title: "Obrigado por participar",
     paragraphs: [
-      "Esta atividade investiga como o uso de inteligência artificial durante a escrita influencia a memória do que foi escrito e a sensação de autoria sobre o texto.",
-      "Se você preferir que seus dados não sejam usados, clique no botão abaixo e eles serão apagados agora.",
+      "O que estamos investigando nesta atividade é se usar inteligência artificial na hora de escrever muda o quanto a pessoa lembra do que escreveu e o quanto ela sente que o texto é dela.",
+      "Se você preferir que seus dados não sejam usados, é só clicar no botão abaixo que eles são apagados na hora."
     ],
-    withdraw_label: "Retirar meus dados",
+    withdraw_label: "Retirar meus dados"
   },
 };
 

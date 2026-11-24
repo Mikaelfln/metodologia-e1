@@ -10,10 +10,10 @@ const ENDING_SECONDS = 120;
 
 const MESSAGES = {
   invalid_session:
-    "Este link não está ativo. Peça um novo link a quem está aplicando a sessão.",
+    "Esse link não está mais ativo, peça outro para quem está aplicando a sessão.",
   not_configured: "O site ainda não foi configurado.",
-  invalid_data: "Alguma resposta não foi aceita. Confira o que você preencheu e tente de novo.",
-  fallback: "Não foi possível falar com o servidor. Verifique a conexão e tente de novo.",
+  invalid_data: "Alguma resposta não foi aceita, confira o que foi preenchido e tente novamente.",
+  fallback: "Não deu para conectar com o servidor. Veja se a internet está funcionando e tente novamente.",
 };
 
 const params = new URLSearchParams(window.location.search);
@@ -46,7 +46,7 @@ function paragraphs(items) {
 
 function show(nodes, layout = "") {
   stopClock();
-  screen.dataset.layout = layout;
+  document.body.dataset.layout = layout;
   screen.replaceChildren(...nodes);
   window.scrollTo(0, 0);
   screen.focus({ preventScroll: true });
@@ -122,7 +122,9 @@ async function openConsent() {
   if (!sessionCode) {
     show([
       el("h1", { text: "Link incompleto" }),
-      el("p", { text: "Abra o link completo que você recebeu de quem está aplicando a sessão." }),
+      el("p", {
+        text: "Está faltando o código da sessão no link. Abra o link do jeito que foi passado por quem está aplicando.",
+      }),
     ]);
     return;
   }
@@ -134,7 +136,7 @@ async function openConsent() {
     const retry = el("button", {
       class: "primary",
       type: "button",
-      text: "Tentar de novo",
+      text: "Tentar novamente",
       onclick: () => openConsent(),
     });
     show([el("h1", { text: "Não foi possível abrir a sessão" }), notice, el("div", { class: "actions" }, retry)]);
@@ -154,7 +156,7 @@ function renderConsent(consent) {
     }),
   );
   decline.addEventListener("click", () =>
-    closing("Tudo bem. Nada foi registrado. Você já pode fechar esta página."),
+    closing("Sem problemas, nenhum dado seu foi registrado e você já pode fechar esta página."),
   );
   show([
     el("h1", { text: consent.title }),
@@ -179,7 +181,7 @@ function renderInstructions(payload) {
 
 async function renderTask(payload) {
   const notice = el("p", { class: "notice", role: "alert" });
-  const retry = el("button", { class: "primary", type: "button", text: "Tentar de novo" });
+  const retry = el("button", { class: "primary", type: "button", text: "Tentar novamente" });
   retry.addEventListener("click", () => attempt(retry, notice, () => openTask(payload)));
   show([el("p", { class: "waiting", text: "Carregando…" }), notice]);
   try {
@@ -216,8 +218,8 @@ async function openTask(payload) {
     const ok = withinRange(words);
     countValue.textContent = `${words} ${words === 1 ? "palavra" : "palavras"}`;
     if (ok) countHint.textContent = "";
-    else if (words < MIN_WORDS) countHint.textContent = `, faltam ${MIN_WORDS - words} para o mínimo`;
-    else countHint.textContent = `, ${words - MAX_WORDS} acima do máximo`;
+    else if (words < MIN_WORDS) countHint.textContent = ` (faltam ${MIN_WORDS - words} para chegar em ${MIN_WORDS})`;
+    else countHint.textContent = ` (passou ${words - MAX_WORDS} do limite de ${MAX_WORDS})`;
     count.dataset.ok = String(ok);
     submit.disabled = !ok || finished;
   }
@@ -238,12 +240,12 @@ async function openTask(payload) {
       store.removeItem(DRAFT_KEY);
     } catch (error) {
       if (timedOut) {
-        submit.textContent = "Enviar de novo";
+        submit.textContent = "Enviar novamente";
         submit.disabled = false;
         submit.onclick = () => deliver(true);
         await recover(error, notice);
         if (!notice.textContent) return;
-        notice.textContent = `O tempo acabou. ${notice.textContent}`;
+        notice.textContent = `O tempo acabou, mas o resumo ainda não foi enviado. ${notice.textContent}`;
       } else {
         finished = false;
         editor.readOnly = false;
@@ -497,7 +499,7 @@ function renderDebrief(payload) {
     class: "primary",
     type: "button",
     text: "Concluir",
-    onclick: () => closing("Obrigado pela participação. Você já pode fechar esta página."),
+    onclick: () => closing("Muito obrigado por ter participado! Agora é só fechar esta página."),
   });
   const erase = el("button", { class: "primary", type: "button", text: "Apagar meus dados" });
   const keep = el("button", { class: "quiet", type: "button", text: "Manter meus dados" });
@@ -505,7 +507,7 @@ function renderDebrief(payload) {
     "div",
     { class: "confirm", hidden: true },
     el("p", {
-      text: "Tudo o que você escreveu e respondeu nesta sessão será apagado agora. Isso não pode ser desfeito.",
+      text: "Se você confirmar, tudo o que escreveu e respondeu nesta sessão vai ser apagado e não tem como recuperar depois.",
     }),
     el("div", { class: "actions" }, erase, keep),
   );
@@ -525,7 +527,7 @@ function renderDebrief(payload) {
   erase.addEventListener("click", () =>
     attempt(erase, notice, async () => {
       await api.withdraw(state.token);
-      closing("Seus dados foram apagados. Obrigado pela presença. Você já pode fechar esta página.");
+      closing("Seus dados foram apagados. Mesmo assim, obrigado por ter vindo, você já pode fechar esta página.");
     }),
   );
   show([
@@ -576,7 +578,7 @@ async function main() {
         const retry = el("button", {
           class: "primary",
           type: "button",
-          text: "Tentar de novo",
+          text: "Tentar novamente",
           onclick: () => main(),
         });
         show([el("h1", { text: "Não foi possível retomar a sessão" }), notice, el("div", { class: "actions" }, retry)]);

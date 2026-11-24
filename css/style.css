@@ -52,9 +52,10 @@ body {
 
 .masthead {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 1rem;
-  padding: 0.9rem clamp(1.25rem, 9vw, 9rem);
+  min-height: 3.2rem;
+  padding: 0 clamp(1.25rem, 9vw, 9rem);
   border-bottom: 2px solid var(--ink);
   font-family: var(--controls);
   font-size: 0.85rem;
@@ -79,7 +80,7 @@ body {
   align-self: center;
   width: 2rem;
   height: 2rem;
-  margin: -0.4rem 0 -0.4rem auto;
+  margin: 0 -0.4rem 0 auto;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -112,13 +113,18 @@ main > * {
   max-width: 36rem;
 }
 
-main[data-layout="wide"] {
+body[data-layout="wide"] .masthead {
+  padding-left: clamp(1.25rem, 4vw, 4rem);
+  padding-right: clamp(1.25rem, 4vw, 4rem);
+}
+
+body[data-layout="wide"] main {
   padding-top: 0;
   padding-left: clamp(1.25rem, 4vw, 4rem);
   padding-right: clamp(1.25rem, 4vw, 4rem);
 }
 
-main[data-layout="wide"] > * {
+body[data-layout="wide"] main > * {
   max-width: none;
 }
 

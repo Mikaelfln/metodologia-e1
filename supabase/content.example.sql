@@ -2,11 +2,11 @@ insert into content (key, value) values
 ('consent', $json${
   "title": "Termo de consentimento",
   "paragraphs": [
-    "Você está sendo convidado(a) a participar de uma atividade da disciplina de Metodologia Científica da UFCG sobre escrita de textos acadêmicos.",
-    "Nesta sessão você vai ler um texto de uma página, escrever um resumo dele e, em seguida, responder a algumas perguntas. A sessão dura de 20 a 30 minutos.",
-    "A participação é voluntária e anônima. Não pedimos nome, e-mail nem matrícula, e nada do que você fizer aqui afeta notas ou avaliações. Você pode desistir a qualquer momento: basta fechar a página. Se desistir no meio, avise quem está aplicando a sessão para que o que já foi registrado seja apagado.",
-    "Guardamos o que você escrever e responder, os horários de cada etapa e as interações com esta página (por exemplo, quando ela perde o foco ou quando um texto é colado). Os dados ficam em um banco de acesso restrito à equipe e serão usados somente nesta atividade de ensino. Eles são mantidos até [[PRAZO]] e depois o banco é apagado. Uma versão anonimizada será compartilhada com a turma e o professor.",
-    "Ao final, explicamos com mais detalhes o objetivo da atividade e você poderá pedir que seus dados sejam apagados.",
+    "Você está sendo convidado(a) a participar de uma atividade da disciplina de Metodologia Científica da UFCG, que tem a ver com a escrita de textos acadêmicos.",
+    "A ideia é que você leia um texto de uma página, escreva um resumo dele e depois responda a algumas perguntas. Tudo isso deve levar entre 20 e 30 minutos.",
+    "Sua participação é voluntária e anônima, ou seja, não pedimos nome, e-mail ou matrícula, e nada do que for feito aqui interfere em notas ou avaliações. Se quiser desistir é só fechar a página, e caso isso aconteça no meio da sessão avise quem está aplicando para que a gente apague o que já tinha sido registrado.",
+    "Vamos guardar o que você escrever e responder, os horários de cada etapa e algumas interações com a página (por exemplo quando ela perde o foco ou quando algum texto é colado). Esses dados ficam em um banco que só a equipe acessa, serão usados apenas nesta atividade de ensino e ficam guardados até [[PRAZO]], quando o banco será apagado. Uma versão anonimizada vai ser compartilhada com a turma e com o professor.",
+    "No final da sessão explicamos melhor qual é o objetivo da atividade, e nesse momento você pode pedir que seus dados sejam apagados se preferir.",
     "Responsáveis: [[RESPONSAVEIS]]. Contato: [[CONTATO]]."
   ],
   "accept_label": "Li e aceito participar",
@@ -15,30 +15,30 @@ insert into content (key, value) values
 ('instructions_no_ai', $json${
   "title": "Como vai funcionar",
   "paragraphs": [
-    "Você vai ler um texto e escrever um resumo dele com suas próprias palavras.",
-    "Nesta sessão você deve trabalhar sem nenhuma ferramenta de inteligência artificial e sem consultar outros materiais. Mantenha esta página aberta e não troque de aba durante a tarefa.",
-    "O tempo começa a contar quando você clicar em Começar. O texto aparece nesse momento."
+    "Nesta sessão você vai ler um texto e escrever um resumo dele com as suas próprias palavras.",
+    "Pedimos que você faça isso sem usar nenhuma ferramenta de inteligência artificial e sem consultar outros materiais, então deixe esta página aberta e não troque de aba enquanto estiver escrevendo.",
+    "O texto só aparece depois que você clicar em Começar, e é a partir daí que o tempo passa a contar."
   ]
 }$json$::jsonb),
 ('instructions_ai_review', $json${
   "title": "Como vai funcionar",
   "paragraphs": [
-    "Você vai ler um texto e escrever um resumo dele com suas próprias palavras.",
-    "Escreva o resumo você mesmo(a). Depois de escrever, você pode pedir à ferramenta de IA indicada pelo aplicador que revise o seu texto (clareza, gramática, concisão) e aproveitar as sugestões. Não peça à IA que escreva o resumo por você.",
-    "O tempo começa a contar quando você clicar em Começar. O texto aparece nesse momento."
+    "Nesta sessão você vai ler um texto e escrever um resumo dele com as suas próprias palavras.",
+    "O resumo deve ser escrito por você. Depois que terminar de escrever, pode pedir para a ferramenta de IA indicada pelo aplicador revisar o seu texto (clareza, gramática, tamanho) e aproveitar as sugestões que achar boas, mas sem pedir para ela escrever o resumo no seu lugar.",
+    "O texto só aparece depois que você clicar em Começar, e é a partir daí que o tempo passa a contar."
   ]
 }$json$::jsonb),
 ('instructions_ai_generate', $json${
   "title": "Como vai funcionar",
   "paragraphs": [
-    "Você vai ler um texto e entregar um resumo dele.",
-    "Use a ferramenta de IA indicada pelo aplicador para gerar o resumo: copie o texto, peça o resumo e cole o resultado aqui. Você pode editar o texto gerado como quiser antes de entregar.",
-    "O tempo começa a contar quando você clicar em Começar. O texto aparece nesse momento."
+    "Nesta sessão você vai ler um texto e entregar um resumo dele.",
+    "Para isso, use a ferramenta de IA indicada pelo aplicador: copie o texto, peça um resumo e cole aqui o que ela gerar. Se quiser, pode editar o resultado antes de entregar.",
+    "O texto só aparece depois que você clicar em Começar, e é a partir daí que o tempo passa a contar."
   ]
 }$json$::jsonb),
 ('task', $json${
   "title": "Tarefa",
-  "prompt": "Leia o texto e escreva um resumo de 150 a 200 palavras. Você tem 15 minutos."
+  "prompt": "Faça um resumo do texto com 150 a 200 palavras, em até 15 minutos."
 }$json$::jsonb),
 ('source_text', $json${
   "title": "O farol de Ponta Seca",
@@ -52,7 +52,7 @@ insert into content (key, value) values
   ]
 }$json$::jsonb),
 ('recall', $json${
-  "prompt": "Sem consultar nada, escreva de memória uma frase do resumo que você acabou de entregar, o mais fiel possível ao que você entregou.",
+  "prompt": "Agora, sem consultar nada, tente escrever de memória uma frase do resumo que você acabou de entregar, do jeito mais parecido possível com o que estava lá.",
   "skip_label": "Não consigo lembrar de nenhuma frase"
 }$json$::jsonb),
 ('authorship', $json${
@@ -61,12 +61,16 @@ insert into content (key, value) values
   "high": "totalmente meu"
 }$json$::jsonb),
 ('quiz_intro', $json${
-  "prompt": "Responda às perguntas abaixo sobre o texto que você leu, sem consultá-lo."
+  "prompt": "As perguntas abaixo são sobre o texto que você leu. Responda sem voltar a consultá-lo."
 }$json$::jsonb),
 ('profile', $json${
-  "intro": "Para terminar, três perguntas rápidas sobre você.",
+  "intro": "Para terminar, só mais três perguntas sobre você.",
   "course_label": "Qual é o seu curso?",
-  "course_options": ["Ciência da Computação", "Outro curso da UFCG", "Outro"],
+  "course_options": [
+    "Ciência da Computação",
+    "Outro curso da UFCG",
+    "Outro"
+  ],
   "term_label": "Em que período você está?",
   "ai_frequency_label": "Com que frequência você usa ferramentas de IA para escrever textos?",
   "ai_frequency_low": "nunca",
@@ -75,10 +79,10 @@ insert into content (key, value) values
 ('debrief', $json${
   "title": "Obrigado por participar",
   "paragraphs": [
-    "Esta atividade investiga como o uso de inteligência artificial durante a escrita influencia a memória do que foi escrito e a sensação de autoria sobre o texto.",
-    "Cada participante foi sorteado para uma de três situações: escrever sem IA, escrever e pedir à IA que revisasse, ou pedir à IA que gerasse o resumo. Depois, todos responderam às mesmas perguntas: recordar uma frase do próprio resumo, avaliar o quanto o texto parecia seu e responder a questões sobre o texto lido.",
-    "Não explicamos isso no início porque saber das perguntas com antecedência mudaria a forma de fazer a tarefa. Pedimos que você não comente os detalhes com colegas que ainda possam participar.",
-    "Se, sabendo disso, você preferir que seus dados não sejam usados, clique no botão abaixo e eles serão apagados agora. Para pedir a retirada depois, envie o código abaixo para [[CONTATO]]."
+    "O que estamos investigando nesta atividade é se usar inteligência artificial na hora de escrever muda o quanto a pessoa lembra do que escreveu e o quanto ela sente que o texto é dela.",
+    "Cada participante foi sorteado para uma de três situações, que eram escrever sem IA, escrever e pedir para a IA revisar, ou pedir para a IA gerar o resumo. Depois todo mundo respondeu às mesmas perguntas, em que era preciso recordar uma frase do próprio resumo, dizer o quanto o texto parecia seu e responder a questões sobre o texto lido.",
+    "Não contamos isso no começo porque saber das perguntas antes mudaria o jeito de fazer a tarefa. Por esse mesmo motivo, pedimos que você não comente os detalhes com colegas que ainda possam participar.",
+    "Se depois de saber disso você preferir que seus dados não sejam usados, é só clicar no botão abaixo que eles são apagados na hora. Também dá para pedir a retirada mais tarde, mandando o código abaixo para [[CONTATO]]."
   ],
   "withdraw_label": "Retirar meus dados"
 }$json$::jsonb);
