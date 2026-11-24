@@ -38,7 +38,7 @@ insert into content (key, value) values
 }$json$::jsonb),
 ('task', $json${
   "title": "Tarefa",
-  "prompt": "Faça um resumo do texto com 150 a 200 palavras, em até 15 minutos."
+  "prompt": "Faça um resumo do texto com 150 a 200 palavras em até 15 minutos."
 }$json$::jsonb),
 ('source_text', $json${
   "title": "O farol de Ponta Seca",

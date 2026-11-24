@@ -35,7 +35,7 @@ export const content = {
   },
   task: {
     title: "Tarefa",
-    prompt: "Faça um resumo do texto com 150 a 200 palavras, em até 15 minutos."
+    prompt: "Faça um resumo do texto com 150 a 200 palavras em até 15 minutos."
   },
   source_text: {
     title: "O farol de Ponta Seca",
